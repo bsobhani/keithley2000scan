@@ -1,0 +1,19 @@
+record(ao,"test"){
+	field(DTYP, "asynInt32")
+	field(OUT, "@asyn(kscan,0,1)SCAN_RUN")
+}
+record(ao,"TimeTotal"){
+	field(DTYP, "asynFloat64")
+	field(OUT, "@asyn(kscan,0,1)SCAN_TIME_TOTAL")
+}
+record(ao,"NumChannels"){
+	field(DTYP, "asynInt32")
+	field(OUT, "@asyn(kscan,0,1)SCAN_NUM_CHANNELS")
+}
+
+record(waveform,"ScanResults"){
+	field(DTYP, "asynFloat64ArrayIn")
+	field(INP, "@asyn(kscan,0,1)SCAN_RESULTS")
+	field(FTVL, "DOUBLE")
+	field(NELM, "128")
+}

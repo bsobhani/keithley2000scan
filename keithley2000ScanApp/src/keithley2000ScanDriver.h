@@ -5,7 +5,8 @@
 #define P_TimeTotalString "SCAN_TIME_TOTAL" /* asynFloat64,    r/w */
 #define P_NumChannelsString "SCAN_NUM_CHANNELS" /* asynInt32,    r/w */
 #define P_ScanResultsString "SCAN_RESULTS" /* asynFloat64ArrayIn,    r/w */
-#define P_ScanIntervalString "SCAN_INTERVAL" /* asynFloat64ArrayIn,    r/w */
+#define P_ScanIntervalString "SCAN_INTERVAL" /* asynFloat64,    r/w */
+#define P_ScanCountString "SCAN_COUNT" /* asynInt32,    r/w */
 
 class Keithley2000ScanDriver : public asynPortDriver{
 public:
@@ -20,6 +21,7 @@ public:
 	int P_ScanInterval;
 	int P_NumChannels;
 	int P_ScanResults;
+	int P_ScanCount;
 	//double time_total;
 	asynStatus writeInt32(asynUser* pasynUser,epicsInt32 value);
 	asynStatus writeFloat64(asynUser* pasynUser,epicsFloat64 value);
@@ -27,6 +29,7 @@ public:
 	epicsEventId eventId_;
 	asynStatus set_time_total();
 	asynStatus set_scan_interval();
+	asynStatus set_scan_count();
 	asynStatus set_num_channels();
 	asynStatus get_results(double*);
 };

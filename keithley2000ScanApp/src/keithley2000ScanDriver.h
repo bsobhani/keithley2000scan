@@ -17,6 +17,7 @@ public:
 	asynUser *asynUserKscan_p_;
 	int P_Run;
 	int P_TimeTotal;
+	int P_ScanInterval;
 	int P_NumChannels;
 	int P_ScanResults;
 	//double time_total;

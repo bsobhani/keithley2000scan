@@ -51,6 +51,7 @@ Keithley2000ScanDriver::Keithley2000ScanDriver(const char* portName, const char*
 	createParam(P_TimeTotalString, asynParamFloat64, &P_TimeTotal);
 	createParam(P_NumChannelsString, asynParamInt32, &P_NumChannels);
 	createParam(P_ScanResultsString, asynParamInt32, &P_ScanResults);
+	createParam(P_ScanIntervalString, asynParamFloat64, &P_ScanInterval);
 	//run();
 }
 
@@ -87,6 +88,22 @@ asynStatus Keithley2000ScanDriver::set_time_total(){
 	sendCmd(rep, buf);
 	return asynSuccess;
 }
+
+asynStatus Keithley2000ScanDriver::set_scan_interval(){
+	char buf[200];
+	char rep[200];
+	double time_total;
+	int scan_interval;
+	getDoubleParam(P_ScanInterval, &scan_interval);
+	getIntegerParam(P_NumChannels, &num_channels);
+	//sprintf(buf,":SENS:FUNC \"VOLT\", (@1:%d)",num_channels);
+	//sendCmd(rep, buf);
+	sprintf(buf,"ROUT:SCAN:MEAS:INT %lf",scan_interval);
+	cout << buf;
+	sendCmd(rep, buf);
+	return asynSuccess;
+}
+
 asynStatus Keithley2000ScanDriver::set_num_channels(){
 	char buf[200];
 	char rep[200];
@@ -146,6 +163,9 @@ asynStatus Keithley2000ScanDriver::writeFloat64(asynUser* pasynUser,epicsFloat64
 	cout << "Write Float";
 	if(pasynUser->reason == P_TimeTotal){
 		setDoubleParam(P_TimeTotal, value);
+	}
+	if(pasynUser->reason == P_ScanInterval){
+		setDoubleParam(P_ScanInterval, value);
 	}
 	callParamCallbacks();
 	return asynSuccess;

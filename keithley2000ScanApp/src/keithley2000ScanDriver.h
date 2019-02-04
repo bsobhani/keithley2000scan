@@ -5,6 +5,7 @@
 #define P_TimeTotalString "SCAN_TIME_TOTAL" /* asynFloat64,    r/w */
 #define P_NumChannelsString "SCAN_NUM_CHANNELS" /* asynInt32,    r/w */
 #define P_ScanResultsString "SCAN_RESULTS" /* asynFloat64ArrayIn,    r/w */
+#define P_ScanIntervalString "SCAN_INTERVAL" /* asynFloat64ArrayIn,    r/w */
 
 class Keithley2000ScanDriver : public asynPortDriver{
 public:
@@ -24,6 +25,7 @@ public:
 	asynStatus readFloat64Array(asynUser* pasynUser,epicsFloat64* value, size_t nElements, size_t *nIn);
 	epicsEventId eventId_;
 	asynStatus set_time_total();
+	asynStatus set_scan_interval();
 	asynStatus set_num_channels();
 	asynStatus get_results(double*);
 };

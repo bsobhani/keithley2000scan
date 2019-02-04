@@ -92,10 +92,8 @@ asynStatus Keithley2000ScanDriver::set_time_total(){
 asynStatus Keithley2000ScanDriver::set_scan_interval(){
 	char buf[200];
 	char rep[200];
-	double time_total;
-	int scan_interval;
+	double scan_interval;
 	getDoubleParam(P_ScanInterval, &scan_interval);
-	getIntegerParam(P_NumChannels, &num_channels);
 	//sprintf(buf,":SENS:FUNC \"VOLT\", (@1:%d)",num_channels);
 	//sendCmd(rep, buf);
 	sprintf(buf,"ROUT:SCAN:MEAS:INT %lf",scan_interval);

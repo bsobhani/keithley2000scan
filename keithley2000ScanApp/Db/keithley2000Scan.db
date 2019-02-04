@@ -6,6 +6,10 @@ record(ao,"TimeTotal"){
 	field(DTYP, "asynFloat64")
 	field(OUT, "@asyn(kscan,0,1)SCAN_TIME_TOTAL")
 }
+record(ao,"ScanInterval"){
+	field(DTYP, "asynFloat64")
+	field(OUT, "@asyn(kscan,0,1)SCAN_INTERVAL")
+}
 record(ao,"NumChannels"){
 	field(DTYP, "asynInt32")
 	field(OUT, "@asyn(kscan,0,1)SCAN_NUM_CHANNELS")

@@ -25,3 +25,9 @@ iocInit()
 
 ## Start any sequence programs
 #seq snckeithley2000Scan,"user=bsobhani"
+
+dbpf TimeTotal .2
+dbpf NumChannels 2
+dbpf ScanInterval 1
+dbpf ScanCount 2
+

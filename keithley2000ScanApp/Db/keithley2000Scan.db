@@ -15,9 +15,26 @@ record(ao,"NumChannels"){
 	field(OUT, "@asyn(kscan,0,1)SCAN_NUM_CHANNELS")
 }
 
+record(ao,"ScanCount"){
+	field(DTYP, "asynInt32")
+	field(OUT, "@asyn(kscan,0,1)SCAN_COUNT")
+}
+
 record(waveform,"ScanResults"){
 	field(DTYP, "asynFloat64ArrayIn")
 	field(INP, "@asyn(kscan,0,1)SCAN_RESULTS")
+	field(FTVL, "DOUBLE")
+	field(NELM, "128")
+}
+record(waveform,"ChanAResults"){
+	field(DTYP, "asynFloat64ArrayIn")
+	field(INP, "@asyn(kscan,0,1)CHANA_RESULTS")
+	field(FTVL, "DOUBLE")
+	field(NELM, "128")
+}
+record(waveform,"ChanBResults"){
+	field(DTYP, "asynFloat64ArrayIn")
+	field(INP, "@asyn(kscan,0,1)CHANB_RESULTS")
 	field(FTVL, "DOUBLE")
 	field(NELM, "128")
 }

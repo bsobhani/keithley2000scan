@@ -7,6 +7,7 @@
 #define P_ScanResultsString "SCAN_RESULTS" /* asynFloat64ArrayIn,    r/w */
 #define P_ScanIntervalString "SCAN_INTERVAL" /* asynFloat64,    r/w */
 #define P_ScanCountString "SCAN_COUNT" /* asynInt32,    r/w */
+#define P_ScanFuncString "SCAN_FUNC" /* asynInt32,    r/w */
 #define P_ChanAResultsString "CHANA_RESULTS" /* asynInt32,    r/w */
 #define P_ChanBResultsString "CHANB_RESULTS" /* asynInt32,    r/w */
 
@@ -24,6 +25,7 @@ public:
 	int P_NumChannels;
 	int P_ScanResults;
 	int P_ScanCount;
+	int P_ScanFunc;
 	int P_ChanAResults;
 	int P_ChanBResults;
 	//double time_total;
@@ -37,4 +39,5 @@ public:
 	asynStatus set_num_channels();
 	asynStatus get_results(double*, int*);
 	int chan_handles[200];
+	char func[200];
 };

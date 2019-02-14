@@ -88,9 +88,9 @@ asynStatus Keithley2000ScanDriver::set_time_total(){
 	int num_channels;
 	getDoubleParam(P_TimeTotal, &time_total);
 	getIntegerParam(P_NumChannels, &num_channels);
-	sprintf(buf,":SENS:FUNC \"VOLT\", (@1:%d)",num_channels);
+	sprintf(buf,":SENS:FUNC \"%s\", (@1:%d)",func,num_channels);
 	sendCmd(rep, buf);
-	sprintf(buf,":SENS:VOLT:NPLC %lf, (@1:%d)",time_total,num_channels);
+	sprintf(buf,":SENS:%s:NPLC %lf, (@1:%d)",func,time_total,num_channels);
 	cout << buf;
 	sendCmd(rep, buf);
 	return asynSuccess;
@@ -178,6 +178,18 @@ asynStatus Keithley2000ScanDriver::writeInt32(asynUser* pasynUser,epicsInt32 val
 	if(pasynUser->reason == P_ScanCount){
 		setIntegerParam(P_ScanCount, value);
 		set_scan_count();
+	}
+	if(pasynUser->reason == P_ScanFunc){
+		if(value == 0){
+			strcpy(func,"VOLT");
+		}
+		else if(value == 1){
+			strcpy(func,"CURR");
+		}
+		else if(value == 2){
+			strcpy(func,"RES");
+		}
+		
 	}
 	return asynSuccess;
 }

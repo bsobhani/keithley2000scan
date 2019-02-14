@@ -58,9 +58,13 @@ Keithley2000ScanDriver::Keithley2000ScanDriver(const char* portName, const char*
 	createParam(P_ChanAResultsString, asynParamFloat64Array, &P_ChanAResults);
 	createParam(P_ChanBResultsString, asynParamFloat64Array, &P_ChanBResults);
 	createParam(P_ScanFuncString, asynParamInt32, &P_ScanFunc);
+	createParam(P_ChanAFuncString, asynParamInt32, &P_ScanFunc);
 	
 	chan_handles[0] = P_ChanAResults;
 	chan_handles[1] = P_ChanBResults;
+
+	chanfunc_handles[0] = P_ChanAFunc;
+
 	//run();
 }
 
@@ -101,9 +105,6 @@ asynStatus Keithley2000ScanDriver::set_scan_interval(){
 	char rep[REP_LEN];
 	double scan_interval;
 	getDoubleParam(P_ScanInterval, &scan_interval);
-	//sprintf(buf,":SENS:FUNC \"VOLT\", (@1:%d)",num_channels);
-	//sendCmd(rep, buf);
-	//sprintf(buf,"ROUT:SCAN:MEAS:INT %lf",scan_interval);
 	sprintf(buf,"ROUT:SCAN:INT %d",(int) scan_interval);
 	cout << buf;
 	sendCmd(rep, buf);
@@ -178,6 +179,18 @@ asynStatus Keithley2000ScanDriver::writeInt32(asynUser* pasynUser,epicsInt32 val
 	if(pasynUser->reason == P_ScanCount){
 		setIntegerParam(P_ScanCount, value);
 		set_scan_count();
+	}
+	if(pasynUser->reason == P_ScanFunc){
+		if(value == 0){
+			strcpy(func,"VOLT");
+		}
+		else if(value == 1){
+			strcpy(func,"CURR");
+		}
+		else if(value == 2){
+			strcpy(func,"RES");
+		}
+		
 	}
 	if(pasynUser->reason == P_ScanFunc){
 		if(value == 0){
@@ -273,11 +286,6 @@ void Keithley2000ScanDriver::run(){
 
 extern "C" {
 
-void test(){
-	cout << "asdfg\n";
-}
-
-
 static const iocshArg * const testinitArgs[] = {};
 static const iocshArg initArg0 = {"portName",iocshArgString};
 static const iocshArg initArg1 = {"IOPortName",iocshArgString};
@@ -286,23 +294,16 @@ static const iocshArg * const initArgs[] = {&initArg0, &initArg1, &initArg2};
 static const iocshFuncDef testinitFuncDef = {"test",0, testinitArgs};
 static const iocshFuncDef initFuncDef = {"keithley2000ScanDriverConfigure",3, initArgs};
 
-static void testinitCallFunc(const iocshArgBuf* args){
-	test();
-}
 
 static void initCallFunc(const iocshArgBuf* args){
 	new Keithley2000ScanDriver(args[0].sval, args[1].sval, args[2].ival);
 }
 
-static void testRegister(){
-	iocshRegister(&testinitFuncDef,testinitCallFunc);
-}
 
 static void keithley2000ScanDriverRegister(){
 	iocshRegister(&initFuncDef,initCallFunc);
 }
 
-epicsExportRegistrar(testRegister);
 epicsExportRegistrar(keithley2000ScanDriverRegister);
 
 }

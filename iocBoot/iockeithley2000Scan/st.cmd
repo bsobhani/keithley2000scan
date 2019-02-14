@@ -30,4 +30,5 @@ dbpf TimeTotal .2
 dbpf NumChannels 2
 dbpf ScanInterval 1
 dbpf ScanCount 2
+dbpf ScanFunc 0
 

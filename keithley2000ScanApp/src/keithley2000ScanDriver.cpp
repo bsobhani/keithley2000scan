@@ -57,6 +57,7 @@ Keithley2000ScanDriver::Keithley2000ScanDriver(const char* portName, const char*
 	createParam(P_ScanCountString, asynParamInt32, &P_ScanCount);
 	createParam(P_ChanAResultsString, asynParamFloat64Array, &P_ChanAResults);
 	createParam(P_ChanBResultsString, asynParamFloat64Array, &P_ChanBResults);
+	createParam(P_ScanFuncString, asynParamInt32, &P_ScanFunc);
 	
 	chan_handles[0] = P_ChanAResults;
 	chan_handles[1] = P_ChanBResults;

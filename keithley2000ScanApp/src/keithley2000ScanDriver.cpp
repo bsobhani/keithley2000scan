@@ -60,9 +60,16 @@ Keithley2000ScanDriver::Keithley2000ScanDriver(const char* portName, const char*
 	createParam(P_ScanFuncString, asynParamInt32, &P_ScanFunc);
 	createParam(P_ChanAFuncString, asynParamInt32, &P_ChanAFunc);
 	createParam(P_ChanBFuncString, asynParamInt32, &P_ChanBFunc);
+	createParam(P_ChanATimesString, asynParamInt32, &P_ChanATimes);
+	createParam(P_ChanBTimesString, asynParamInt32, &P_ChanBTimes);
 	
 	chan_handles[0] = P_ChanAResults;
 	chan_handles[1] = P_ChanBResults;
+
+	chan_times_handles[0] = P_ChanATimes;
+	chan_times_handles[1] = P_ChanBTimes;
+
+
 
 	chanfunc_handles[0] = P_ChanAFunc;
 	chanfunc_handles[1] = P_ChanBFunc;
@@ -159,6 +166,33 @@ asynStatus Keithley2000ScanDriver::get_results(double* results, int* num_results
 	getIntegerParam(P_NumChannels, &num_channels);
 	getIntegerParam(P_ScanCount, &scan_count);
 	sprintf(buf,"TRAC:DATA? 1, %d, \"defbuffer1\", READ",num_channels*scan_count);
+	sendCmd(rep, buf);
+	cout << rep << endl;
+
+	int i = 0;
+
+	pch = strtok(rep,",");
+	while(pch != NULL){
+		sscanf(pch,"%lf",results+i);
+		pch = strtok(NULL,",");
+		i++;
+	}
+	*num_results = i;
+
+
+	return asynSuccess;
+}
+
+asynStatus Keithley2000ScanDriver::get_times(double* results, int* num_results){
+	char buf[BUF_LEN];
+	char rep[REP_LEN];
+	char* pch;
+	int num_channels;
+	int scan_count;
+	getIntegerParam(P_NumChannels, &num_channels);
+	getIntegerParam(P_ScanCount, &scan_count);
+	sprintf(buf,"TRAC:DATA? 1, %d, \"defbuffer1\", REL",num_channels*scan_count);
+	cout << buf << endl;
 	sendCmd(rep, buf);
 	cout << rep << endl;
 
@@ -290,6 +324,21 @@ asynStatus Keithley2000ScanDriver::readFloat64Array(asynUser* pasynUser,epicsFlo
 			int num_results;
 			int num_channels;
 			get_results(results, &num_results);
+			getIntegerParam(P_NumChannels, &num_channels);
+			num_results = num_results/num_channels;
+			for(int j = 0; j<num_results; ++j){
+				value[j] = results[j*num_channels + i];
+
+			}
+			*nIn = num_results;
+		}
+	}
+	for(int i = 0; i<NUM_CHANS; ++i){
+		if(pasynUser->reason == chan_times_handles[i]){
+			double results[REP_LEN];
+			int num_results;
+			int num_channels;
+			get_times(results, &num_results);
 			getIntegerParam(P_NumChannels, &num_channels);
 			num_results = num_results/num_channels;
 			for(int j = 0; j<num_results; ++j){

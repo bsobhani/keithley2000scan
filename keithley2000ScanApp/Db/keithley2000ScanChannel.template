@@ -7,7 +7,13 @@ record(mbbo,"Chan$(INDEX)Func"){
 }
 record(waveform,"Chan$(INDEX)Results"){
 	field(DTYP, "asynFloat64ArrayIn")
-	field(INP, "@asyn(kscan,0,1)CHANB_RESULTS")
+	field(INP, "@asyn(kscan,0,1)CHAN$(INDEX)_RESULTS")
+	field(FTVL, "DOUBLE")
+	field(NELM, "128")
+}
+record(waveform,"Chan$(INDEX)Times"){
+	field(DTYP, "asynFloat64ArrayIn")
+	field(INP, "@asyn(kscan,0,1)CHAN$(INDEX)_TIMES")
 	field(FTVL, "DOUBLE")
 	field(NELM, "128")
 }

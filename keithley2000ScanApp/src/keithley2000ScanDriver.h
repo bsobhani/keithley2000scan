@@ -12,6 +12,8 @@
 #define P_ChanBResultsString "CHANB_RESULTS" /* asynInt32,    r/w */
 #define P_ChanAFuncString "CHANA_FUNC" /* asynInt32,    r/w */
 #define P_ChanBFuncString "CHANB_FUNC" /* asynInt32,    r/w */
+#define P_ChanATimesString "CHANA_TIMES" /* asynInt32,    r/w */
+#define P_ChanBTimesString "CHANB_TIMES" /* asynInt32,    r/w */
 
 class Keithley2000ScanDriver : public asynPortDriver{
 public:
@@ -32,6 +34,8 @@ public:
 	int P_ChanBFunc;
 	int P_ChanAResults;
 	int P_ChanBResults;
+	int P_ChanATimes;
+	int P_ChanBTimes;
 	//double time_total;
 	asynStatus writeInt32(asynUser* pasynUser,epicsInt32 value);
 	asynStatus writeFloat64(asynUser* pasynUser,epicsFloat64 value);
@@ -43,7 +47,9 @@ public:
 	asynStatus set_scan_count();
 	asynStatus set_num_channels();
 	asynStatus get_results(double*, int*);
+	asynStatus get_times(double*, int*);
 	int chan_handles[200];
+	int chan_times_handles[200];
 	int chanfunc_handles[200];
 	char func[200];
 };

@@ -1,0 +1,13 @@
+record(mbbo,"Chan$(INDEX)Func"){
+	field(DTYP, "asynInt32")
+	field(OUT, "@asyn(kscan,0,1)CHAN$(INDEX)_FUNC")
+	field(ZRST, "VOLT")
+	field(ONST, "CURR")
+	field(TWST, "RES")
+}
+record(waveform,"Chan$(INDEX)Results"){
+	field(DTYP, "asynFloat64ArrayIn")
+	field(INP, "@asyn(kscan,0,1)CHANB_RESULTS")
+	field(FTVL, "DOUBLE")
+	field(NELM, "128")
+}

@@ -50,15 +50,15 @@ record(waveform,"ScanResults"){
 	field(FTVL, "DOUBLE")
 	field(NELM, "128")
 }
-#record(waveform,"ChanAResults"){
-#	field(DTYP, "asynFloat64ArrayIn")
-#	field(INP, "@asyn(kscan,0,1)CHANA_RESULTS")
-#	field(FTVL, "DOUBLE")
-#	field(NELM, "128")
-#}
-#record(waveform,"ChanBResults"){
-#	field(DTYP, "asynFloat64ArrayIn")
-#	field(INP, "@asyn(kscan,0,1)CHANB_RESULTS")
-#	field(FTVL, "DOUBLE")
-#	field(NELM, "128")
-#}
+record(waveform,"ChanAResults"){
+	field(DTYP, "asynFloat64ArrayIn")
+	field(INP, "@asyn(kscan,0,1)CHANA_RESULTS")
+	field(FTVL, "DOUBLE")
+	field(NELM, "128")
+}
+record(waveform,"ChanBResults"){
+	field(DTYP, "asynFloat64ArrayIn")
+	field(INP, "@asyn(kscan,0,1)CHANB_RESULTS")
+	field(FTVL, "DOUBLE")
+	field(NELM, "128")
+}

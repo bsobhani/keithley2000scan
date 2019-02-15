@@ -1,0 +1,9 @@
+file "db/keithley2000ScanChannel.template"
+{
+pattern
+{INDEX}
+{"A"}
+{"B"}
+}
+
+

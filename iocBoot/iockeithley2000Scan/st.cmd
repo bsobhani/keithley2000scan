@@ -13,6 +13,7 @@ keithley2000ScanDriver_registerRecordDeviceDriver(pdbbase)
 
 ## Load record instances
 dbLoadRecords("../../db/keithley2000Scan.db","user=bsobhani")
+dbLoadRecords("../../db/keithley2000ScanChannel.db","user=bsobhani")
 
 test()
 

@@ -13,7 +13,7 @@ using namespace std;
 
 const int REP_LEN=2000;
 const int BUF_LEN=2000;
-const int NUM_CHANS=4;
+const int NUM_CHANS=2;
 
 Keithley2000ScanDriver::Keithley2000ScanDriver(const char* portName, const char* IOPortName, int maxArraySize)
   : asynPortDriver(portName, maxArraySize, 100, 
@@ -58,12 +58,14 @@ Keithley2000ScanDriver::Keithley2000ScanDriver(const char* portName, const char*
 	createParam(P_ChanAResultsString, asynParamFloat64Array, &P_ChanAResults);
 	createParam(P_ChanBResultsString, asynParamFloat64Array, &P_ChanBResults);
 	createParam(P_ScanFuncString, asynParamInt32, &P_ScanFunc);
-	createParam(P_ChanAFuncString, asynParamInt32, &P_ScanFunc);
+	createParam(P_ChanAFuncString, asynParamInt32, &P_ChanAFunc);
+	createParam(P_ChanBFuncString, asynParamInt32, &P_ChanBFunc);
 	
 	chan_handles[0] = P_ChanAResults;
 	chan_handles[1] = P_ChanBResults;
 
 	chanfunc_handles[0] = P_ChanAFunc;
+	chanfunc_handles[1] = P_ChanBFunc;
 
 	//run();
 }
@@ -95,6 +97,21 @@ asynStatus Keithley2000ScanDriver::set_time_total(){
 	sprintf(buf,":SENS:FUNC \"%s\", (@1:%d)",func,num_channels);
 	sendCmd(rep, buf);
 	sprintf(buf,":SENS:%s:NPLC %lf, (@1:%d)",func,time_total,num_channels);
+	cout << buf;
+	sendCmd(rep, buf);
+	return asynSuccess;
+}
+
+asynStatus Keithley2000ScanDriver::set_chan_time_total(char* chan_func, int chan_num){
+	char buf[BUF_LEN];
+	char rep[REP_LEN];
+	double time_total;
+	int num_channels;
+	getDoubleParam(P_TimeTotal, &time_total);
+	getIntegerParam(P_NumChannels, &num_channels);
+	sprintf(buf,":SENS:FUNC \"%s\", (@%d:%d)",chan_func,chan_num,chan_num);
+	sendCmd(rep, buf);
+	sprintf(buf,":SENS:%s:NPLC %lf, (@%d:%d)",chan_func,time_total,chan_num,chan_num);
 	cout << buf;
 	sendCmd(rep, buf);
 	return asynSuccess;
@@ -165,7 +182,7 @@ asynStatus Keithley2000ScanDriver::writeInt32(asynUser* pasynUser,epicsInt32 val
 		//int time_total;
 		//getIntegerParam(P_TimeTotal, &time_total);
 		//cout << time_total;
-		set_time_total();
+		//set_time_total();
 		set_num_channels();
 		run();
 		//get_results();
@@ -192,17 +209,25 @@ asynStatus Keithley2000ScanDriver::writeInt32(asynUser* pasynUser,epicsInt32 val
 		}
 		
 	}
-	if(pasynUser->reason == P_ScanFunc){
-		if(value == 0){
-			strcpy(func,"VOLT");
+	for(int i = 0; i<NUM_CHANS; ++i){
+		if(pasynUser->reason == chanfunc_handles[i]){
+			char chan_func[200];
+			if(value == 0){
+				strcpy(chan_func,"VOLT");
+			}
+			else if(value == 1){
+				strcpy(chan_func,"CURR");
+			}
+			else if(value == 2){
+				strcpy(chan_func,"RES");
+			}
+			cout << "HEREAAAAAAAAA" << value;
+			double results[REP_LEN];
+			int num_results;
+			int num_channels;
+			set_chan_time_total(chan_func, i+1);
+
 		}
-		else if(value == 1){
-			strcpy(func,"CURR");
-		}
-		else if(value == 2){
-			strcpy(func,"RES");
-		}
-		
 	}
 	return asynSuccess;
 }

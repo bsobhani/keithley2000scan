@@ -1,0 +1,14 @@
+record(mbbo,"ChanAFunc"){
+	field(DTYP, "asynInt32")
+	field(OUT, "@asyn(kscan,0,1)CHANA_FUNC")
+	field(ZRST, "VOLT")
+	field(ONST, "CURR")
+	field(TWST, "RES")
+}
+record(mbbo,"ChanBFunc"){
+	field(DTYP, "asynInt32")
+	field(OUT, "@asyn(kscan,0,1)CHANB_FUNC")
+	field(ZRST, "VOLT")
+	field(ONST, "CURR")
+	field(TWST, "RES")
+}

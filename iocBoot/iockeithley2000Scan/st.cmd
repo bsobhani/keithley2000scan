@@ -12,14 +12,18 @@ keithley2000Scan_registerRecordDeviceDriver(pdbbase)
 keithley2000ScanDriver_registerRecordDeviceDriver(pdbbase) 
 
 ## Load record instances
-dbLoadRecords("../../db/keithley2000Scan.db","user=bsobhani")
-dbLoadRecords("../../db/keithley2000ScanChannel.db","user=bsobhani")
+dbLoadRecords("../../db/keithley2000Scan.db","user=bsobhani,Sys=XF:28IDC-ES,Dev={KDMM6500}")
+dbLoadRecords("../../db/keithley2000ScanChannel.db","user=bsobhani,Sys=XF:28IDC-ES,Dev={KDMM6500}")
 
-test()
 
 drvAsynIPPortConfigure("P0","192.168.56.7:5025")
 
 keithley2000ScanDriverConfigure("kscan","P0",1)
+
+asynSetTraceFile("kscan",-1,"")
+asynSetTraceMask("kscan",-1,0x09)
+asynSetTraceIOMask("kscan",-1,0x2)
+
 
 
 iocInit()
@@ -27,9 +31,9 @@ iocInit()
 ## Start any sequence programs
 #seq snckeithley2000Scan,"user=bsobhani"
 
-dbpf TimeTotal .2
-dbpf NumChannels 2
-dbpf ScanInterval 1
-dbpf ScanCount 2
-dbpf ScanFunc 0
+#dbpf TimeTotal .2
+#dbpf NumChannels 2
+#dbpf ScanInterval 1
+#dbpf ScanCount 2
+#dbpf ScanFunc 0
 

@@ -1,26 +1,26 @@
-record(ao,"test"){
+record(ao,"$(Sys)$(Dev)test"){
 	field(DTYP, "asynInt32")
 	field(OUT, "@asyn(kscan,0,1)SCAN_RUN")
 }
-record(ao,"TimeTotal"){
+record(ao,"$(Sys)$(Dev)TimeTotal"){
 	field(DTYP, "asynFloat64")
 	field(OUT, "@asyn(kscan,0,1)SCAN_TIME_TOTAL")
 }
-record(ao,"ScanInterval"){
+record(ao,"$(Sys)$(Dev)ScanInterval"){
 	field(DTYP, "asynFloat64")
 	field(OUT, "@asyn(kscan,0,1)SCAN_INTERVAL")
 }
-record(ao,"NumChannels"){
+record(ao,"$(Sys)$(Dev)NumChannels"){
 	field(DTYP, "asynInt32")
 	field(OUT, "@asyn(kscan,0,1)SCAN_NUM_CHANNELS")
 }
 
-record(ao,"ScanCount"){
+record(ao,"$(Sys)$(Dev)ScanCount"){
 	field(DTYP, "asynInt32")
 	field(OUT, "@asyn(kscan,0,1)SCAN_COUNT")
 }
 
-record(mbbo,"Func"){
+record(mbbo,"$(Sys)$(Dev)Func"){
 	field(DTYP, "asynInt32")
 	field(OUT, "@asyn(kscan,0,1)SCAN_FUNC")
 	field(ZRST, "VOLT")
@@ -28,7 +28,7 @@ record(mbbo,"Func"){
 	field(TWST, "RES")
 }
 
-#record(mbbo,"ChanAFunc"){
+#record(mbbo,"$(Sys)$(Dev)ChanAFunc"){
 #	field(DTYP, "asynInt32")
 #	field(OUT, "@asyn(kscan,0,1)CHANA_FUNC")
 #	field(ZRST, "VOLT")
@@ -36,7 +36,7 @@ record(mbbo,"Func"){
 #	field(TWST, "RES")
 #}
 
-#record(mbbo,"ChanBFunc"){
+#record(mbbo,"$(Sys)$(Dev)ChanBFunc"){
 #	field(DTYP, "asynInt32")
 #	field(OUT, "@asyn(kscan,0,1)CHANB_FUNC")
 #	field(ZRST, "VOLT")
@@ -44,11 +44,34 @@ record(mbbo,"Func"){
 #	field(TWST, "RES")
 #}
 
-record(waveform,"ScanResults"){
+record(waveform,"$(Sys)$(Dev)ScanResults"){
 	field(DTYP, "asynFloat64ArrayIn")
 	field(INP, "@asyn(kscan,0,1)SCAN_RESULTS")
 	field(FTVL, "DOUBLE")
 	field(NELM, "128")
+}
+record(ai,"$(Sys)$(Dev)ReadCurr"){
+	field(DTYP, "asynFloat64")
+	field(INP, "@asyn(kscan,0,1)READ_CURR")
+	field(FLNK, "$(Sys)$(Dev)TimestampInt")
+}
+record(ai,"$(Sys)$(Dev)ReadVolt"){
+	field(DTYP, "asynFloat64")
+	field(INP, "@asyn(kscan,0,1)READ_VOLT")
+	field(FLNK, "$(Sys)$(Dev)TimestampInt")
+}
+record(ai,"$(Sys)$(Dev)Timestamp"){
+	field(DTYP, "asynFloat64")
+	field(INP, "@asyn(kscan,0,1)TIMESTAMP")
+}
+record(ai,"$(Sys)$(Dev)TimestampFrac"){
+	field(DTYP, "asynFloat64")
+	field(INP, "@asyn(kscan,0,1)TIMESTAMP_FRAC")
+}
+record(longin,"$(Sys)$(Dev)TimestampInt"){
+	field(DTYP, "asynInt32")
+	field(INP, "@asyn(kscan,0,1)TIMESTAMP_INT")
+	field(FLNK, "$(Sys)$(Dev)TimestampFrac")
 }
 #record(waveform,"ChanAResults"){
 #	field(DTYP, "asynFloat64ArrayIn")

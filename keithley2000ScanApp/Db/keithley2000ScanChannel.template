@@ -1,23 +1,23 @@
-record(mbbo,"Chan$(INDEX)Func"){
+record(mbbo,"$(Sys)$(Dev)Chan$(INDEX)Func"){
 	field(DTYP, "asynInt32")
 	field(OUT, "@asyn(kscan,0,1)CHAN$(INDEX)_FUNC")
 	field(ZRST, "VOLT")
 	field(ONST, "CURR")
 	field(TWST, "RES")
 }
-record(waveform,"Chan$(INDEX)Results"){
+record(waveform,"$(Sys)$(Dev)Chan$(INDEX)Results"){
 	field(DTYP, "asynFloat64ArrayIn")
 	field(INP, "@asyn(kscan,0,1)CHAN$(INDEX)_RESULTS")
 	field(FTVL, "DOUBLE")
 	field(NELM, "7000020")
 }
-record(waveform,"Chan$(INDEX)Times"){
+record(waveform,"$(Sys)$(Dev)Chan$(INDEX)Times"){
 	field(DTYP, "asynFloat64ArrayIn")
 	field(INP, "@asyn(kscan,0,1)CHAN$(INDEX)_TIMES")
 	field(FTVL, "DOUBLE")
 	field(NELM, "128")
 }
-record(bo,"Chan$(INDEX)Enable"){
+record(bo,"$(Sys)$(Dev)Chan$(INDEX)Enable"){
 	field(DTYP, "asynInt32")
 	field(OUT, "@asyn(kscan,0,1)CHAN$(INDEX)_ENABLE")
 }

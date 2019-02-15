@@ -11,8 +11,10 @@
 
 using namespace std;
 
-const int REP_LEN=2000;
-const int BUF_LEN=2000;
+const int MAX_CAPACITY=7000020;
+const int REP_LEN=100;
+const int BIG_REP_LEN=MAX_CAPACITY*5;
+const int BUF_LEN=100;
 const int NUM_CHANS=2;
 
 Keithley2000ScanDriver::Keithley2000ScanDriver(const char* portName, const char* IOPortName, int maxArraySize)
@@ -78,7 +80,7 @@ Keithley2000ScanDriver::Keithley2000ScanDriver(const char* portName, const char*
 }
 
 void Keithley2000ScanDriver::sendCmd(char* rep, char* buf){
-	int len = REP_LEN;
+	int len = BIG_REP_LEN;
 	int timeout = 1;
 	int eomReason;
 	size_t nwrite;
@@ -159,7 +161,7 @@ asynStatus Keithley2000ScanDriver::set_scan_count(){
 
 asynStatus Keithley2000ScanDriver::get_results(double* results, int* num_results){
 	char buf[BUF_LEN];
-	char rep[REP_LEN];
+	static char rep[BIG_REP_LEN];
 	char* pch;
 	int num_channels;
 	int scan_count;
@@ -185,7 +187,7 @@ asynStatus Keithley2000ScanDriver::get_results(double* results, int* num_results
 
 asynStatus Keithley2000ScanDriver::get_times(double* results, int* num_results){
 	char buf[BUF_LEN];
-	char rep[REP_LEN];
+	static char rep[BIG_REP_LEN];
 	char* pch;
 	int num_channels;
 	int scan_count;
@@ -255,7 +257,6 @@ asynStatus Keithley2000ScanDriver::writeInt32(asynUser* pasynUser,epicsInt32 val
 			else if(value == 2){
 				strcpy(chan_func,"RES");
 			}
-			cout << "HEREAAAAAAAAA" << value;
 			double results[REP_LEN];
 			int num_results;
 			int num_channels;
@@ -320,7 +321,7 @@ asynStatus Keithley2000ScanDriver::readFloat64Array(asynUser* pasynUser,epicsFlo
 	*/
 	for(int i = 0; i<NUM_CHANS; ++i){
 		if(pasynUser->reason == chan_handles[i]){
-			double results[REP_LEN];
+			static double results[BIG_REP_LEN];
 			int num_results;
 			int num_channels;
 			get_results(results, &num_results);

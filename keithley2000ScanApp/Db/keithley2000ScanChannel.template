@@ -9,11 +9,15 @@ record(waveform,"Chan$(INDEX)Results"){
 	field(DTYP, "asynFloat64ArrayIn")
 	field(INP, "@asyn(kscan,0,1)CHAN$(INDEX)_RESULTS")
 	field(FTVL, "DOUBLE")
-	field(NELM, "128")
+	field(NELM, "7000020")
 }
 record(waveform,"Chan$(INDEX)Times"){
 	field(DTYP, "asynFloat64ArrayIn")
 	field(INP, "@asyn(kscan,0,1)CHAN$(INDEX)_TIMES")
 	field(FTVL, "DOUBLE")
 	field(NELM, "128")
+}
+record(bo,"Chan$(INDEX)Enable"){
+	field(DTYP, "asynInt32")
+	field(OUT, "@asyn(kscan,0,1)CHAN$(INDEX)_ENABLE")
 }

@@ -36,4 +36,5 @@ iocInit()
 #dbpf ScanInterval 1
 #dbpf ScanCount 2
 #dbpf ScanFunc 0
-dbpf XF:28IDC-ES{KDMM6500}ReadCurr.SCAN ".1 second"
+#dbpf XF:28IDC-ES{KDMM6500}ReadCurr.SCAN ".1 second"
+dbpf XF:28IDC-ES{KDMM6500}SyncType 1

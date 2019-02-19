@@ -21,6 +21,8 @@
 #define P_TimestampString "TIMESTAMP" /* asynInt32,    r/w */
 #define P_TimestampIntString "TIMESTAMP_INT" /* asynInt32,    r/w */
 #define P_TimestampFracString "TIMESTAMP_FRAC" /* asynInt32,    r/w */
+#define P_ReadTypeString "READ_TYPE" /* asynInt32,    r/w */
+#define P_SyncTypeString "SYNC_TYPE" /* asynInt32,    r/w */
 
 class Keithley2000ScanDriver : public asynPortDriver{
 public:
@@ -47,9 +49,11 @@ public:
 	int P_ChanBEnable;
 	int P_ReadCurr;
 	int P_ReadVolt;
+	int P_ReadType;
 	int P_Timestamp;
 	int P_TimestampFrac;
 	int P_TimestampInt;
+	int P_SyncType;
 	//double time_total;
 	asynStatus writeInt32(asynUser* pasynUser,epicsInt32 value);
 	asynStatus writeFloat64(asynUser* pasynUser,epicsFloat64 value);
@@ -70,4 +74,5 @@ public:
 	int chan_enable_handles[200];
 	int chanfunc_handles[200];
 	char func[200];
+	asynStatus read_by_type(char* func, epicsFloat64* result);
 };

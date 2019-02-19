@@ -68,6 +68,8 @@ Keithley2000ScanDriver::Keithley2000ScanDriver(const char* portName, const char*
 	createParam(P_TimestampString, asynParamFloat64, &P_Timestamp);
 	createParam(P_TimestampIntString, asynParamInt32, &P_TimestampInt);
 	createParam(P_TimestampFracString, asynParamFloat64, &P_TimestampFrac);
+	createParam(P_ReadTypeString, asynParamInt32, &P_ReadType);
+	createParam(P_SyncTypeString, asynParamInt32, &P_SyncType);
 	
 	chan_handles[0] = P_ChanAResults;
 	chan_handles[1] = P_ChanBResults;
@@ -266,6 +268,12 @@ asynStatus Keithley2000ScanDriver::writeInt32(asynUser* pasynUser,epicsInt32 val
 
 		}
 	}
+	if(pasynUser->reason == P_ReadType){
+		setIntegerParam(P_ReadType, value);
+	}
+	if(pasynUser->reason == P_SyncType){
+		setIntegerParam(P_SyncType, value);
+	}
 	return asynSuccess;
 }
 
@@ -294,23 +302,51 @@ asynStatus Keithley2000ScanDriver::update_timestamp(){
 	setDoubleParam(P_TimestampFrac, timestamp_frac);
 }
 
+asynStatus Keithley2000ScanDriver::read_by_type(char* func, epicsFloat64* result){
+	char rep[REP_LEN];	
+	char buf[BUF_LEN];
+	int read_type;
+	sprintf(buf,":SENS:FUNC \"%s\"",func);
+	sendCmd(buf);
+	sendCmd(rep, "READ?");
+	sscanf(rep,"%lf",result);
+	update_timestamp();
+	return asynSuccess;
+
+}
+
 
 asynStatus Keithley2000ScanDriver::readFloat64(asynUser* pasynUser,epicsFloat64* value){
 	if(pasynUser->reason == P_ReadCurr){
-		char rep[REP_LEN];	
-		char buf[BUF_LEN];
-		sendCmd(":SENS:FUNC \"CURR\"");
-		sendCmd(rep, "READ?");
-		sscanf(rep,"%lf",value);
-		update_timestamp();
+		//char rep[REP_LEN];	
+		//char buf[BUF_LEN];
+		//sendCmd(":SENS:FUNC \"CURR\"");
+		//sendCmd(rep, "READ?");
+		//sscanf(rep,"%lf",value);
+		//update_timestamp();
+		int read_type;
+		int sync_type;
+		getIntegerParam(P_ReadType, &read_type);
+		getIntegerParam(P_SyncType, &sync_type);
+		if(read_type==1 || sync_type == 1){
+			read_by_type("CURR", value);
+		}
 	}
 	if(pasynUser->reason == P_ReadVolt){
-		char rep[REP_LEN];	
-		char buf[BUF_LEN];
-		sendCmd(":SENS:FUNC \"VOLT\"");
-		sendCmd(rep, "READ?");
-		sscanf(rep,"%lf",value);
-		update_timestamp();
+		//char rep[REP_LEN];	
+		//char buf[BUF_LEN];
+		//sendCmd(":SENS:FUNC \"VOLT\"");
+		//sendCmd(rep, "READ?");
+		//sscanf(rep,"%lf",value);
+		//update_timestamp();
+
+		int read_type;
+		int sync_type;
+		getIntegerParam(P_ReadType, &read_type);
+		getIntegerParam(P_SyncType, &sync_type);
+		if(read_type==0 || sync_type == 1){
+			read_by_type("VOLT", value);
+		}
 	}
 	if(pasynUser->reason == P_TimestampFrac){
 		getDoubleParam(P_TimestampFrac, value);
@@ -323,6 +359,7 @@ asynStatus Keithley2000ScanDriver::readInt32(asynUser* pasynUser,epicsInt32* val
 	if(pasynUser->reason == P_TimestampInt){
 		getIntegerParam(P_TimestampInt, value);
 	}
+	
 	callParamCallbacks();
 	return asynSuccess;
 }
@@ -345,24 +382,6 @@ asynStatus Keithley2000ScanDriver::readFloat64Array(asynUser* pasynUser,epicsFlo
 		*nIn = num_results;
 		
 	}
-	/*
-	if(pasynUser->reason == P_ChanAResults){
-		//value[0] = 8;
-		//value[1] = 5;
-		//*nIn = 2;
-		double results[200];
-		int num_results;
-		int num_channels;
-		get_results(results, &num_results);
-		getIntegerParam(P_NumChannels, &num_channels);
-		for(int i = 0; i<num_results; ++i){
-			value[i] = results[i];
-
-		}
-		*nIn = num_results;
-		
-	}
-	*/
 	for(int i = 0; i<NUM_CHANS; ++i){
 		if(pasynUser->reason == chan_handles[i]){
 			static double results[BIG_REP_LEN];

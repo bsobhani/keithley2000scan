@@ -73,6 +73,34 @@ record(longin,"$(Sys)$(Dev)TimestampInt"){
 	field(INP, "@asyn(kscan,0,1)TIMESTAMP_INT")
 	field(FLNK, "$(Sys)$(Dev)TimestampFrac")
 }
+record(mbbo,"$(Sys)$(Dev)ReadType"){
+	field(DTYP, "asynInt32")
+	#field(OUT, "$(Sys)$(Dev)ReadTypeSeq.SELN")
+	field(OUT, "@asyn(kscan,0,1)READ_TYPE")
+	field(ZRVL, "0")
+	field(ONVL, "1")
+	field(TWVL, "2")
+	#field(FFVL, "15")
+	field(ZRST, "Voltage")
+	field(ONST, "Current")
+	field(TWST, "Resistance")
+
+}
+record(mbbo,"$(Sys)$(Dev)SyncType"){
+	field(DTYP, "asynInt32")
+	field(OUT, "@asyn(kscan,0,1)SYNC_TYPE")
+	field(ZRVL, "0")
+	field(ONVL, "1")
+	field(ZRST, "Synchronous")
+	field(ONST, "Asynchronous")
+
+}
+record(seq,"$(Sys)$(Dev)ReadTypeSeq"){
+	field(SELM, "Mask")
+	field(LNK1, "$(Sys)$(Dev)ReadVolt.SCAN")
+	field(LNK2, "$(Sys)$(Dev)ReadCurr")
+	field(LNK3, "$(Sys)$(Dev)ReadRes")
+}
 #record(waveform,"ChanAResults"){
 #	field(DTYP, "asynFloat64ArrayIn")
 #	field(INP, "@asyn(kscan,0,1)CHANA_RESULTS")

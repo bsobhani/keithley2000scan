@@ -1,0 +1,46 @@
+record(mbbo,"$(Sys,undefined)$(Dev,undefined)ChanAFunc"){
+	field(DTYP, "asynInt32")
+	field(OUT, "@asyn(kscan,0,1)CHANA_FUNC")
+	field(ZRST, "VOLT")
+	field(ONST, "CURR")
+	field(TWST, "RES")
+}
+record(waveform,"$(Sys,undefined)$(Dev,undefined)ChanAResults"){
+	field(DTYP, "asynFloat64ArrayIn")
+	field(INP, "@asyn(kscan,0,1)CHANA_RESULTS")
+	field(FTVL, "DOUBLE")
+	field(NELM, "7000020")
+}
+record(waveform,"$(Sys,undefined)$(Dev,undefined)ChanATimes"){
+	field(DTYP, "asynFloat64ArrayIn")
+	field(INP, "@asyn(kscan,0,1)CHANA_TIMES")
+	field(FTVL, "DOUBLE")
+	field(NELM, "128")
+}
+record(bo,"$(Sys,undefined)$(Dev,undefined)ChanAEnable"){
+	field(DTYP, "asynInt32")
+	field(OUT, "@asyn(kscan,0,1)CHANA_ENABLE")
+}
+record(mbbo,"$(Sys,undefined)$(Dev,undefined)ChanBFunc"){
+	field(DTYP, "asynInt32")
+	field(OUT, "@asyn(kscan,0,1)CHANB_FUNC")
+	field(ZRST, "VOLT")
+	field(ONST, "CURR")
+	field(TWST, "RES")
+}
+record(waveform,"$(Sys,undefined)$(Dev,undefined)ChanBResults"){
+	field(DTYP, "asynFloat64ArrayIn")
+	field(INP, "@asyn(kscan,0,1)CHANB_RESULTS")
+	field(FTVL, "DOUBLE")
+	field(NELM, "7000020")
+}
+record(waveform,"$(Sys,undefined)$(Dev,undefined)ChanBTimes"){
+	field(DTYP, "asynFloat64ArrayIn")
+	field(INP, "@asyn(kscan,0,1)CHANB_TIMES")
+	field(FTVL, "DOUBLE")
+	field(NELM, "128")
+}
+record(bo,"$(Sys,undefined)$(Dev,undefined)ChanBEnable"){
+	field(DTYP, "asynInt32")
+	field(OUT, "@asyn(kscan,0,1)CHANB_ENABLE")
+}

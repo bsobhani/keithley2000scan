@@ -16,7 +16,7 @@ dbLoadRecords("../../db/keithley2000Scan.db","user=bsobhani,Sys=XF:28IDC-ES,Dev=
 dbLoadRecords("../../db/keithley2000ScanChannel.db","user=bsobhani,Sys=XF:28IDC-ES,Dev={KDMM6500}")
 
 
-drvAsynIPPortConfigure("P0","192.168.56.7:5025")
+drvAsynIPPortConfigure("P0","10.28.2.133:5025")
 
 keithley2000ScanDriverConfigure("kscan","P0",1)
 
@@ -36,5 +36,6 @@ iocInit()
 #dbpf ScanInterval 1
 #dbpf ScanCount 2
 #dbpf ScanFunc 0
-#dbpf XF:28IDC-ES{KDMM6500}ReadCurr.SCAN ".1 second"
-dbpf XF:28IDC-ES{KDMM6500}SyncType 1
+dbpf XF:28IDC-ES{KDMM6500}ReadCurr.SCAN ".03 second"
+dbpf XF:28IDC-ES{KDMM6500}ReadVolt.SCAN ".03 second"
+dbpf XF:28IDC-ES{KDMM6500}SyncType 0

@@ -1,0 +1,4 @@
+NAME=keithley2000scan
+USER=softioc
+PORT=4172
+HOST=xf28idc-ioc1

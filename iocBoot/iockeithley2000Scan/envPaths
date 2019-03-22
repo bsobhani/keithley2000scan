@@ -1,0 +1,5 @@
+epicsEnvSet("ARCH","linux-x86_64")
+epicsEnvSet("IOC","iockeithley2000Scan")
+epicsEnvSet("TOP","/epics/iocs/keithley2000scan")
+epicsEnvSet("ASYN","/usr/lib/epics")
+epicsEnvSet("EPICS_BASE","/usr/lib/epics")
